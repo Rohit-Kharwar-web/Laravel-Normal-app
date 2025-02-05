@@ -20,7 +20,7 @@
 
 /* Body Styling */
 body {
-    background-color: #f4f4f4;
+    background-color: #4e4242;
     color: #333;
     display: flex;
     justify-content: center;
