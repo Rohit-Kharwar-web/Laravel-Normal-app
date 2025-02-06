@@ -8,9 +8,13 @@ use Illuminate\Http\Request;
 class TaskController extends Controller
 {
     // Fetch all tasks
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Task::all());
+       $t= Task::all();
+        if($request->expectsJson()){
+        return response()->json($t);
+        }
+        return view('tasks',['task'=>$t]);
     }
 
     // Store a new task
