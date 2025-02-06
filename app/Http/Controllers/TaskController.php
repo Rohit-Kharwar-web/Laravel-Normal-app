@@ -42,13 +42,28 @@ class TaskController extends Controller
             'title' => 'required|string|max:255'
         ]);
 
-        $task = Task::findOrFail($id);
-        $task->update(['title' => $request->title]);
-
-        return response()->json([
-            'message' => 'Task updated successfully!',
-            'task' => $task
-        ]);
+        $task = Task::find($id);
+        if ($task) {
+            $task->update(['title' => $request->title]);
+            if($request->expectsJson()){
+               
+                return response()->json([
+                    'message' => 'Task updated successfully!',
+                    'task' => $task
+                ]);
+            } 
+            return redirect()->route('')->with('success','');
+        } else{
+            if($request->expectsJson()){
+               
+                return response()->json([
+                    'message' => 'Task updated fail!',
+                    'task' => $task
+                ]);
+            } 
+            return redirect()->route('/404')->with('failed','');
+        }
+       
     }
 
     // Delete a task
